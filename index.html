@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book an Appointment</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #111110;
+      --white: #fafaf8;
+      --gray-100: #f5f5f3;
+      --gray-200: #e8e8e4;
+      --gray-400: #a0a09a;
+      --gray-600: #6b6b65;
+      --accent: #2d5a3d;
+      --accent-light: #e8f0eb;
+      --accent-hover: #234830;
+      --danger: #c0392b;
+      --warning: #e67e22;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      min-height: 100vh;
+      font-weight: 300;
+    }
+
+    /* HEADER */
+    header {
+      padding: 2.5rem 3rem;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex;
+      align-items: flex-end;
+      gap: 1rem;
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--black);
+    }
+
+    header span {
+      font-size: 0.8rem;
+      color: var(--gray-400);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--gray-200);
+      margin: 3.5rem 0;
+    }
+
+    /* STEP INDICATOR */
+    .steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 3rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--gray-400);
+      font-weight: 400;
+    }
+
+    .step.active { color: var(--black); }
+    .step.done { color: var(--accent); }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 500;
+      flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+
+    .step.active .step-num {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+
+    .step.done .step-num {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--white);
+    }
+
+    .step-line {
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+      margin: 0 0.8rem;
+    }
+
+    /* CALENDAR */
+    .calendar-wrapper {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .calendar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .calendar-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+
+    .cal-nav {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .cal-nav button {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--gray-200);
+      background: var(--white);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      color: var(--gray-600);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .cal-nav button:hover {
+      background: var(--gray-100);
+      color: var(--black);
+    }
+
+    .calendar-grid {
+      padding: 1.2rem 1.5rem;
+    }
+
+    .day-labels {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      margin-bottom: 0.5rem;
+    }
+
+    .day-label {
+      text-align: center;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      padding: 0.4rem 0;
+      font-weight: 500;
+    }
+
+    .dates-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .date-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      cursor: default;
+      color: var(--gray-400);
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .date-cell.current-month { color: var(--black); }
+    .date-cell.past { color: var(--gray-200); }
+    .date-cell.today {
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .date-cell.has-slots {
+      cursor: pointer;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .date-cell.has-slots:hover {
+      background: var(--accent);
+      color: var(--white);
+      transform: scale(1.08);
+    }
+
+    .date-cell.selected {
+      background: var(--accent) !important;
+      color: var(--white) !important;
+      font-weight: 500;
+    }
+
+    .date-cell.fully-booked {
+      color: var(--gray-200);
+      text-decoration: line-through;
+    }
+
+    /* LOADING */
+    .loading-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--gray-400);
+      font-size: 0.9rem;
+    }
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--gray-200);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* TIME SLOTS */
+    .slots-section {
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .slots-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .slots-date-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .slots-subtitle {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      margin-bottom: 1.5rem;
+    }
+
+    .schedule-block {
+      margin-bottom: 1.5rem;
+    }
+
+    .schedule-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .schedule-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+
+    .slots-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .slot-btn {
+      padding: 0.5rem 1rem;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--black);
+      transition: all 0.2s;
+      font-weight: 400;
+    }
+
+    .slot-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .slot-btn.selected {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    .slot-btn.booked {
+      border-color: var(--gray-200);
+      color: var(--gray-200);
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    .no-slots {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      padding: 1rem 0;
+      font-style: italic;
+    }
+
+    /* SELECTED SUMMARY */
+    .selection-summary {
+      margin-top: 1.5rem;
+      padding: 1rem 1.2rem;
+      background: var(--accent-light);
+      border-radius: 8px;
+      border: 1px solid #c5ddc9;
+      font-size: 0.88rem;
+      color: var(--accent);
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .selection-summary.visible {
+      display: flex;
+    }
+
+    .selection-summary strong {
+      font-weight: 500;
+    }
+
+    .clear-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 0.8rem;
+      text-decoration: underline;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* NOTICE */
+    .notice {
+      padding: 0.9rem 1.2rem;
+      background: var(--gray-100);
+      border-left: 3px solid var(--gray-400);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    /* TALLY SECTION */
+    .form-section {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.4s ease;
+      pointer-events: none;
+    }
+
+    .form-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .tally-wrapper {
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .tally-wrapper iframe {
+      width: 100%;
+      min-height: 700px;
+      border: none;
+      display: block;
+    }
+
+    /* LEGEND */
+    .legend {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--gray-600);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    .legend-dot.available { background: var(--accent-light); border: 1.5px solid var(--accent); }
+    .legend-dot.unavailable { background: var(--white); border: 1.5px solid var(--gray-200); }
+
+    /* ERROR */
+    .error-state {
+      padding: 1.5rem;
+      background: #fdf2f0;
+      border: 1px solid #f5c6c0;
+      border-radius: 8px;
+      color: var(--danger);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 1.5rem; }
+      .container { padding: 2rem 1.2rem 4rem; }
+      .section-title { font-size: 1.5rem; }
+      .steps { gap: 0; }
+      .step span:not(.step-num) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div style="display:flex;align-items:baseline;gap:0.8rem;">
+      <h1>Appointments</h1>
+      <span>Booking Portal</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- STEPS -->
+  <div class="steps">
+    <div class="step active" id="step1-indicator">
+      <div class="step-num">1</div>
+      <span>Choose a time</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step" id="step2-indicator">
+      <div class="step-num">2</div>
+      <span>Your details</span>
+    </div>
+  </div>
+
+  <!-- STEP 1: AVAILABILITY -->
+  <div id="step1">
+    <p class="section-label">Step 1</p>
+    <h2 class="section-title">Select an available date</h2>
+    <p class="section-sub">Highlighted dates have open slots. Select one to see available times.</p>
+
+    <div class="notice">
+      ⓘ All appointments are subject to admin approval. Your preferred time will be reviewed and confirmed via email.
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="calendar-wrapper">
+      <div class="calendar-header">
+        <h3 id="cal-month-label">Loading...</h3>
+        <div class="cal-nav">
+          <button id="prev-month" onclick="changeMonth(-1)">‹</button>
+          <button id="next-month" onclick="changeMonth(1)">›</button>
+        </div>
+      </div>
+      <div class="calendar-grid">
+        <div class="day-labels">
+          <div class="day-label">Sun</div>
+          <div class="day-label">Mon</div>
+          <div class="day-label">Tue</div>
+          <div class="day-label">Wed</div>
+          <div class="day-label">Thu</div>
+          <div class="day-label">Fri</div>
+          <div class="day-label">Sat</div>
+        </div>
+        <div class="dates-grid" id="dates-grid">
+          <div class="loading-state" style="grid-column:1/-1">
+            <div class="spinner"></div>
+            Loading availability...
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot available"></div> Available</div>
+      <div class="legend-item"><div class="legend-dot unavailable"></div> No slots</div>
+    </div>
+
+    <!-- TIME SLOTS -->
+    <div class="slots-section" id="slots-section">
+      <hr class="divider" style="margin:2rem 0 1.5rem"/>
+      <h3 class="slots-date-title" id="slots-date-title"></h3>
+      <p class="slots-subtitle">Select your preferred time slot below.</p>
+      <div id="slots-content"></div>
+
+      <div class="selection-summary" id="selection-summary">
+        <span>Selected: <strong id="summary-text"></strong></span>
+        <button class="clear-btn" onclick="clearSelection()">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" id="form-divider" style="display:none"/>
+
+  <!-- STEP 2: FORM -->
+  <div class="form-section" id="step2">
+    <p class="section-label">Step 2</p>
+    <h2 class="section-title">Fill in your details</h2>
+    <p class="section-sub">Your preferred date and time has been noted. Complete the form below to submit your request.</p>
+
+    <div class="tally-wrapper">
+      <iframe
+        src="https://tally.so/embed/J96LOY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+        id="tally-frame"
+        title="Appointment Request Form"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ─── CONFIG ───────────────────────────────────────────────────────────────
+  const AIRTABLE_TOKEN = 'pat2bQB7JW87bMIUa.bdc37d355bdc37c21f8fd93c5fd629a0de8ec8fb819be4425bd8bb111fcc783c'; // ← paste your token here locally
+  const BASE_ID = 'appWYK7qd4SzxKyli';
+  const TABLE_NAME = 'Staff%20Schedules';
+
+  // All possible time slots (8am–5pm every 30 min)
+  const ALL_SLOTS = [
+    '8:00 AM','8:30 AM','9:00 AM','9:30 AM','10:00 AM','10:30 AM',
+    '11:00 AM','11:30 AM','12:00 PM','12:30 PM','1:00 PM','1:30 PM',
+    '2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM','4:30 PM','5:00 PM'
+  ];
+
+  // ─── STATE ────────────────────────────────────────────────────────────────
+  let currentDate = new Date();
+  let currentMonth = currentDate.getMonth();
+  let currentYear = currentDate.getFullYear();
+  let scheduleData = []; // raw from Airtable
+  let selectedDate = null;
+  let selectedSlot = null;
+  let selectedSchedule = null;
+
+  // ─── FETCH AIRTABLE ───────────────────────────────────────────────────────
+  async function fetchSchedules() {
+    try {
+      const res = await fetch(
+        `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`,
+        { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
+      );
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+      scheduleData = data.records.map(r => r.fields);
+      renderCalendar();
+    } catch (e) {
+      document.getElementById('dates-grid').innerHTML =
+        `<div class="error-state" style="grid-column:1/-1">
+          Unable to load availability. Please try refreshing or contact us directly.
+        </div>`;
+    }
+  }
+
+  // ─── PARSE BOOKED SLOTS ───────────────────────────────────────────────────
+  function getBookedSlots(bookedSlotsStr) {
+    if (!bookedSlotsStr) return [];
+    // Extract times like "10:00 AM", "2:30 PM" from the booked slots text
+    const matches = bookedSlotsStr.match(/\d{1,2}:\d{2}\s?[AP]M/gi);
+    return matches ? matches.map(s => s.trim()) : [];
+  }
+
+  // ─── GET AVAILABILITY FOR A DATE ─────────────────────────────────────────
+  function getAvailabilityForDate(dateStr) {
+    // dateStr format: YYYY-MM-DD
+    const records = scheduleData.filter(r => {
+      if (!r['Date']) return false;
+      return r['Date'].startsWith(dateStr);
+    });
+    return records;
+  }
+
+  // ─── DATES WITH SLOTS ─────────────────────────────────────────────────────
+  function getDatesWithSlots() {
+    const dates = new Set();
+    scheduleData.forEach(r => {
+      if (r['Date'] && r['Available From'] && r['Available Until']) {
+        dates.add(r['Date'].substring(0, 10));
+      }
+    });
+    return dates;
+  }
+
+  // ─── RENDER CALENDAR ─────────────────────────────────────────────────────
+  function renderCalendar() {
+    const months = ['January','February','March','April','May','June',
+                    'July','August','September','October','November','December'];
+    document.getElementById('cal-month-label').textContent =
+      `${months[currentMonth]} ${currentYear}`;
+
+    const datesWithSlots = getDatesWithSlots();
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const daysInPrev = new Date(currentYear, currentMonth, 0).getDate();
+
+    let html = '';
+
+    // Prev month padding
+    for (let i = firstDay - 1; i >= 0; i--) {
+      html += `<div class="date-cell">${daysInPrev - i}</div>`;
+    }
+
+    // Current month days
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateObj = new Date(currentYear, currentMonth, d);
+      dateObj.setHours(0,0,0,0);
+      const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const isPast = dateObj < today;
+      const isToday = dateObj.getTime() === today.getTime();
+      const hasSlots = datesWithSlots.has(dateStr) && !isPast;
+      const isSelected = selectedDate === dateStr;
+
+      let cls = 'date-cell current-month';
+      if (isPast) cls += ' past';
+      else if (isToday) cls += ' today';
+      if (hasSlots) cls += ' has-slots';
+      if (isSelected) cls += ' selected';
+
+      const click = hasSlots ? `onclick="selectDate('${dateStr}')"` : '';
+      html += `<div class="${cls}" ${click}>${d}</div>`;
+    }
+
+    // Next month padding
+    const totalCells = firstDay + daysInMonth;
+    const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+    for (let i = 1; i <= remaining; i++) {
+      html += `<div class="date-cell">${i}</div>`;
+    }
+
+    document.getElementById('dates-grid').innerHTML = html;
+  }
+
+  // ─── CHANGE MONTH ─────────────────────────────────────────────────────────
+  function changeMonth(dir) {
+    currentMonth += dir;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+    renderCalendar();
+  }
+
+  // ─── SELECT DATE ──────────────────────────────────────────────────────────
+  function selectDate(dateStr) {
+    selectedDate = dateStr;
+    selectedSlot = null;
+    selectedSchedule = null;
+    renderCalendar();
+
+    const records = getAvailabilityForDate(dateStr);
+    const dateObj = new Date(dateStr + 'T00:00:00');
+    const formatted = dateObj.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
+    document.getElementById('slots-date-title').textContent = formatted;
+
+    let html = '';
+
+    records.forEach(record => {
+      const schedule = record['Schedule'] || 'Schedule';
+      const from = record['Available From'] || '8:00 AM';
+      const until = record['Available Until'] || '5:00 PM';
+      const booked = getBookedSlots(record['Booked Slots'] || '');
+
+      // Filter slots within available range
+      const fromIdx = ALL_SLOTS.indexOf(from);
+      const untilIdx = ALL_SLOTS.indexOf(until);
+      const availableSlots = ALL_SLOTS.filter((s, i) => i >= fromIdx && i <= untilIdx);
+
+      html += `<div class="schedule-block">`;
+      html += `<div class="schedule-label">${schedule}</div>`;
+      html += `<div class="slots-grid">`;
+
+      if (availableSlots.length === 0) {
+        html += `<p class="no-slots">No slots available for this schedule.</p>`;
+      } else {
+        availableSlots.forEach(slot => {
+          const isBooked = booked.some(b => b.toLowerCase() === slot.toLowerCase());
+          if (isBooked) {
+            html += `<button class="slot-btn booked" disabled>${slot}</button>`;
+          } else {
+            html += `<button class="slot-btn" onclick="selectSlot('${slot}','${schedule}')">${slot}</button>`;
+          }
+        });
+      }
+
+      html += `</div></div>`;
+    });
+
+    if (records.length === 0) {
+      html = `<p class="no-slots">No schedule data found for this date.</p>`;
+    }
+
+    document.getElementById('slots-content').innerHTML = html;
+
+    const slotsSection = document.getElementById('slots-section');
+    slotsSection.classList.add('visible');
+    setTimeout(() => slotsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+
+    // Hide form until slot selected
+    hideForm();
+    document.getElementById('selection-summary').classList.remove('visible');
+  }
+
+  // ─── SELECT SLOT ──────────────────────────────────────────────────────────
+  function selectSlot(slot, schedule) {
+    selectedSlot = slot;
+    selectedSchedule = schedule;
+
+    // Update button styles
+    document.querySelectorAll('.slot-btn:not(.booked)').forEach(btn => btn.classList.remove('selected'));
+    event.target.classList.add('selected');
+
+    // Show summary
+    const dateObj = new Date(selectedDate + 'T00:00:00');
+    const dateFormatted = dateObj.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+    document.getElementById('summary-text').textContent = `${dateFormatted} at ${slot}`;
+    document.getElementById('selection-summary').classList.add('visible');
+
+    // Update step indicators
+    document.getElementById('step1-indicator').classList.remove('active');
+    document.getElementById('step1-indicator').classList.add('done');
+    document.getElementById('step2-indicator').classList.add('active');
+
+    // Show form
+    showForm();
+  }
+
+  // ─── CLEAR SELECTION ──────────────────────────────────────────────────────
+  function clearSelection() {
+    selectedSlot = null;
+    selectedSchedule = null;
+    document.querySelectorAll('.slot-btn').forEach(btn => btn.classList.remove('selected'));
+    document.getElementById('selection-summary').classList.remove('visible');
+    hideForm();
+
+    document.getElementById('step1-indicator').classList.add('active');
+    document.getElementById('step1-indicator').classList.remove('done');
+    document.getElementById('step2-indicator').classList.remove('active');
+  }
+
+  // ─── SHOW/HIDE FORM ───────────────────────────────────────────────────────
+  function showForm() {
+    const formSection = document.getElementById('step2');
+    const divider = document.getElementById('form-divider');
+    divider.style.display = 'block';
+    formSection.classList.add('visible');
+    setTimeout(() => formSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+  }
+
+  function hideForm() {
+    const formSection = document.getElementById('step2');
+    const divider = document.getElementById('form-divider');
+    divider.style.display = 'none';
+    formSection.classList.remove('visible');
+  }
+
+  // ─── INIT ─────────────────────────────────────────────────────────────────
+  fetchSchedules();
+</script>
+
+</body>
+</html>
