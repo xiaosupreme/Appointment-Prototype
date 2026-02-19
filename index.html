@@ -13,13 +13,14 @@
       --white: #fafaf8;
       --gray-100: #f5f5f3;
       --gray-200: #e8e8e4;
+      --gray-300: #d0d0ca;
       --gray-400: #a0a09a;
       --gray-600: #6b6b65;
       --accent: #2d5a3d;
       --accent-light: #e8f0eb;
-      --accent-hover: #234830;
+      --full: #f5ede8;
+      --full-text: #a0522d;
       --danger: #c0392b;
-      --warning: #e67e22;
     }
 
     html { scroll-behavior: smooth; }
@@ -32,13 +33,12 @@
       font-weight: 300;
     }
 
-    /* HEADER */
     header {
       padding: 2.5rem 3rem;
       border-bottom: 1px solid var(--gray-200);
       display: flex;
-      align-items: flex-end;
-      gap: 1rem;
+      align-items: baseline;
+      gap: 0.8rem;
       background: var(--white);
       position: sticky;
       top: 0;
@@ -50,7 +50,6 @@
       font-size: 1.6rem;
       font-weight: 400;
       letter-spacing: -0.02em;
-      color: var(--black);
     }
 
     header span {
@@ -58,10 +57,8 @@
       color: var(--gray-400);
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 0.2rem;
     }
 
-    /* LAYOUT */
     .container {
       max-width: 960px;
       margin: 0 auto;
@@ -83,7 +80,6 @@
       font-weight: 400;
       letter-spacing: -0.02em;
       margin-bottom: 0.5rem;
-      line-height: 1.2;
     }
 
     .section-sub {
@@ -99,13 +95,8 @@
       margin: 3.5rem 0;
     }
 
-    /* STEP INDICATOR */
-    .steps {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin-bottom: 3rem;
-    }
+    /* STEPS */
+    .steps { display: flex; align-items: center; margin-bottom: 3rem; }
 
     .step {
       display: flex;
@@ -113,95 +104,70 @@
       gap: 0.6rem;
       font-size: 0.85rem;
       color: var(--gray-400);
-      font-weight: 400;
     }
 
     .step.active { color: var(--black); }
     .step.done { color: var(--accent); }
 
     .step-num {
-      width: 26px;
-      height: 26px;
+      width: 26px; height: 26px;
       border-radius: 50%;
       border: 1.5px solid currentColor;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 500;
-      flex-shrink: 0;
-      transition: all 0.3s ease;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 500;
+      transition: all 0.3s;
     }
 
-    .step.active .step-num {
-      background: var(--black);
-      border-color: var(--black);
-      color: var(--white);
-    }
+    .step.active .step-num { background: var(--black); border-color: var(--black); color: var(--white); }
+    .step.done .step-num { background: var(--accent); border-color: var(--accent); color: var(--white); }
+    .step-line { flex: 1; height: 1px; background: var(--gray-200); margin: 0 0.8rem; }
 
-    .step.done .step-num {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--white);
-    }
-
-    .step-line {
-      flex: 1;
-      height: 1px;
-      background: var(--gray-200);
-      margin: 0 0.8rem;
+    /* NOTICE */
+    .notice {
+      padding: 0.9rem 1.2rem;
+      background: var(--gray-100);
+      border-left: 3px solid var(--gray-400);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      line-height: 1.5;
+      margin-bottom: 2rem;
     }
 
     /* CALENDAR */
     .calendar-wrapper {
-      background: var(--white);
       border: 1px solid var(--gray-200);
       border-radius: 12px;
       overflow: hidden;
     }
 
     .calendar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1.2rem 1.5rem;
       border-bottom: 1px solid var(--gray-200);
     }
 
     .calendar-header h3 {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      font-weight: 400;
+      font-size: 1.1rem; font-weight: 400;
     }
 
-    .cal-nav {
-      display: flex;
-      gap: 0.5rem;
-    }
+    .cal-nav { display: flex; gap: 0.5rem; }
 
     .cal-nav button {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       border: 1px solid var(--gray-200);
       background: var(--white);
       border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
+      cursor: pointer; font-size: 1rem;
       color: var(--gray-600);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       transition: all 0.2s;
     }
 
-    .cal-nav button:hover {
-      background: var(--gray-100);
-      color: var(--black);
-    }
+    .cal-nav button:hover { background: var(--gray-100); color: var(--black); }
 
-    .calendar-grid {
-      padding: 1.2rem 1.5rem;
-    }
+    .calendar-grid { padding: 1.2rem 1.5rem; }
 
     .day-labels {
       display: grid;
@@ -227,32 +193,25 @@
 
     .date-cell {
       aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       border-radius: 8px;
       font-size: 0.88rem;
-      cursor: default;
-      color: var(--gray-400);
+      color: var(--gray-300);
       transition: all 0.2s;
-      position: relative;
     }
 
     .date-cell.current-month { color: var(--black); }
-    .date-cell.past { color: var(--gray-200); }
-    .date-cell.today {
-      font-weight: 500;
-      color: var(--accent);
-    }
+    .date-cell.past, .date-cell.weekend { color: var(--gray-200); }
+    .date-cell.today { font-weight: 500; color: var(--accent); }
 
-    .date-cell.has-slots {
+    .date-cell.available {
       cursor: pointer;
       background: var(--accent-light);
       color: var(--accent);
       font-weight: 500;
     }
 
-    .date-cell.has-slots:hover {
+    .date-cell.available:hover {
       background: var(--accent);
       color: var(--white);
       transform: scale(1.08);
@@ -265,11 +224,11 @@
     }
 
     .date-cell.fully-booked {
-      color: var(--gray-200);
-      text-decoration: line-through;
+      background: var(--full);
+      color: var(--full-text);
+      font-size: 0.78rem;
     }
 
-    /* LOADING */
     .loading-state {
       text-align: center;
       padding: 3rem;
@@ -278,8 +237,7 @@
     }
 
     .spinner {
-      width: 20px;
-      height: 20px;
+      width: 20px; height: 20px;
       border: 2px solid var(--gray-200);
       border-top-color: var(--accent);
       border-radius: 50%;
@@ -289,61 +247,48 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* TIME SLOTS */
+    /* LEGEND */
+    .legend { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+
+    .legend-item {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.78rem; color: var(--gray-600);
+    }
+
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+    .legend-dot.available { background: var(--accent-light); border: 1.5px solid var(--accent); }
+    .legend-dot.full { background: var(--full); border: 1.5px solid var(--full-text); }
+    .legend-dot.unavailable { background: var(--white); border: 1.5px solid var(--gray-200); }
+
+    /* SLOTS */
     .slots-section {
       margin-top: 2rem;
-      opacity: 0;
-      transform: translateY(8px);
+      opacity: 0; transform: translateY(8px);
       transition: all 0.3s ease;
       pointer-events: none;
     }
 
-    .slots-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
-    }
+    .slots-section.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
 
     .slots-date-title {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
-      margin-bottom: 0.4rem;
+      font-size: 1.3rem; margin-bottom: 0.4rem;
     }
 
-    .slots-subtitle {
-      font-size: 0.85rem;
-      color: var(--gray-600);
-      margin-bottom: 1.5rem;
-    }
+    .slots-subtitle { font-size: 0.85rem; color: var(--gray-600); margin-bottom: 1.5rem; }
 
-    .schedule-block {
-      margin-bottom: 1.5rem;
-    }
+    .schedule-block { margin-bottom: 1.5rem; }
 
     .schedule-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--gray-400);
-      font-weight: 500;
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray-400);
+      font-weight: 500; margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 0.5rem;
     }
 
-    .schedule-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--gray-200);
-    }
+    .schedule-label::after { content:''; flex:1; height:1px; background: var(--gray-200); }
 
-    .slots-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
+    .slots-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
     .slot-btn {
       padding: 0.5rem 1rem;
@@ -355,36 +300,27 @@
       cursor: pointer;
       color: var(--black);
       transition: all 0.2s;
-      font-weight: 400;
     }
 
-    .slot-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-light);
-    }
+    .slot-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .slot-btn.selected { border-color: var(--accent); background: var(--accent); color: var(--white); }
 
-    .slot-btn.selected {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--white);
-    }
-
-    .slot-btn.booked {
+    .slot-btn.taken {
       border-color: var(--gray-200);
-      color: var(--gray-200);
+      color: var(--gray-300);
+      background: var(--gray-100);
       cursor: not-allowed;
       text-decoration: line-through;
     }
 
-    .no-slots {
-      font-size: 0.9rem;
-      color: var(--gray-400);
-      padding: 1rem 0;
+    .all-taken {
+      font-size: 0.88rem; color: var(--full-text);
+      background: var(--full);
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
       font-style: italic;
     }
 
-    /* SELECTED SUMMARY */
     .selection-summary {
       margin-top: 1.5rem;
       padding: 1rem 1.2rem;
@@ -398,90 +334,35 @@
       justify-content: space-between;
     }
 
-    .selection-summary.visible {
-      display: flex;
-    }
-
-    .selection-summary strong {
-      font-weight: 500;
-    }
+    .selection-summary.visible { display: flex; }
 
     .clear-btn {
-      background: none;
-      border: none;
-      color: var(--accent);
-      cursor: pointer;
-      font-size: 0.8rem;
-      text-decoration: underline;
+      background: none; border: none;
+      color: var(--accent); cursor: pointer;
+      font-size: 0.8rem; text-decoration: underline;
       font-family: 'DM Sans', sans-serif;
     }
 
-    /* NOTICE */
-    .notice {
-      padding: 0.9rem 1.2rem;
-      background: var(--gray-100);
-      border-left: 3px solid var(--gray-400);
-      border-radius: 0 8px 8px 0;
-      font-size: 0.85rem;
-      color: var(--gray-600);
-      line-height: 1.5;
-      margin-bottom: 2rem;
-    }
-
-    /* TALLY SECTION */
+    /* FORM */
     .form-section {
-      opacity: 0;
-      transform: translateY(12px);
+      opacity: 0; transform: translateY(12px);
       transition: all 0.4s ease;
       pointer-events: none;
     }
 
-    .form-section.visible {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: all;
-    }
+    .form-section.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
 
     .tally-wrapper {
       border: 1px solid var(--gray-200);
       border-radius: 12px;
       overflow: hidden;
-      background: var(--white);
     }
 
     .tally-wrapper iframe {
-      width: 100%;
-      min-height: 700px;
-      border: none;
-      display: block;
+      width: 100%; min-height: 700px;
+      border: none; display: block;
     }
 
-    /* LEGEND */
-    .legend {
-      display: flex;
-      gap: 1.5rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.78rem;
-      color: var(--gray-600);
-    }
-
-    .legend-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 3px;
-    }
-
-    .legend-dot.available { background: var(--accent-light); border: 1.5px solid var(--accent); }
-    .legend-dot.unavailable { background: var(--white); border: 1.5px solid var(--gray-200); }
-
-    /* ERROR */
     .error-state {
       padding: 1.5rem;
       background: #fdf2f0;
@@ -496,7 +377,6 @@
       header { padding: 1.5rem; }
       .container { padding: 2rem 1.2rem 4rem; }
       .section-title { font-size: 1.5rem; }
-      .steps { gap: 0; }
       .step span:not(.step-num) { display: none; }
     }
   </style>
@@ -504,17 +384,12 @@
 <body>
 
 <header>
-  <div>
-    <div style="display:flex;align-items:baseline;gap:0.8rem;">
-      <h1>Appointments</h1>
-      <span>Booking Portal</span>
-    </div>
-  </div>
+  <h1>Appointments</h1>
+  <span>Booking Portal</span>
 </header>
 
 <div class="container">
 
-  <!-- STEPS -->
   <div class="steps">
     <div class="step active" id="step1-indicator">
       <div class="step-num">1</div>
@@ -527,23 +402,21 @@
     </div>
   </div>
 
-  <!-- STEP 1: AVAILABILITY -->
   <div id="step1">
     <p class="section-label">Step 1</p>
     <h2 class="section-title">Select an available date</h2>
-    <p class="section-sub">Highlighted dates have open slots. Select one to see available times.</p>
+    <p class="section-sub">Green dates have open slots. Dates marked full have no remaining availability for either schedule.</p>
 
     <div class="notice">
       ⓘ All appointments are subject to admin approval. Your preferred time will be reviewed and confirmed via email.
     </div>
 
-    <!-- CALENDAR -->
     <div class="calendar-wrapper">
       <div class="calendar-header">
         <h3 id="cal-month-label">Loading...</h3>
         <div class="cal-nav">
-          <button id="prev-month" onclick="changeMonth(-1)">‹</button>
-          <button id="next-month" onclick="changeMonth(1)">›</button>
+          <button onclick="changeMonth(-1)">‹</button>
+          <button onclick="changeMonth(1)">›</button>
         </div>
       </div>
       <div class="calendar-grid">
@@ -567,16 +440,15 @@
 
     <div class="legend">
       <div class="legend-item"><div class="legend-dot available"></div> Available</div>
-      <div class="legend-item"><div class="legend-dot unavailable"></div> No slots</div>
+      <div class="legend-item"><div class="legend-dot full"></div> Fully booked</div>
+      <div class="legend-item"><div class="legend-dot unavailable"></div> Unavailable / Weekend</div>
     </div>
 
-    <!-- TIME SLOTS -->
     <div class="slots-section" id="slots-section">
       <hr class="divider" style="margin:2rem 0 1.5rem"/>
       <h3 class="slots-date-title" id="slots-date-title"></h3>
-      <p class="slots-subtitle">Select your preferred time slot below.</p>
+      <p class="slots-subtitle">Crossed-out slots are already approved. Select your preferred available time.</p>
       <div id="slots-content"></div>
-
       <div class="selection-summary" id="selection-summary">
         <span>Selected: <strong id="summary-text"></strong></span>
         <button class="clear-btn" onclick="clearSelection()">Clear</button>
@@ -586,16 +458,13 @@
 
   <hr class="divider" id="form-divider" style="display:none"/>
 
-  <!-- STEP 2: FORM -->
   <div class="form-section" id="step2">
     <p class="section-label">Step 2</p>
     <h2 class="section-title">Fill in your details</h2>
     <p class="section-sub">Your preferred date and time has been noted. Complete the form below to submit your request.</p>
-
     <div class="tally-wrapper">
       <iframe
         src="https://tally.so/embed/J96LOY?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-        id="tally-frame"
         title="Appointment Request Form"
         allowfullscreen>
       </iframe>
@@ -605,37 +474,47 @@
 </div>
 
 <script>
-  // ─── CONFIG ───────────────────────────────────────────────────────────────
-  const AIRTABLE_TOKEN = 'pat2bQB7JW87bMIUa.bdc37d355bdc37c21f8fd93c5fd629a0de8ec8fb819be4425bd8bb111fcc783c'; // ← paste your token here locally
+  // ─── CONFIG ───────────────────────────────────────────────────────────
+  const AIRTABLE_TOKEN = 'pat2bQB7JW87bMIUa.bdc37d355bdc37c21f8fd93c5fd629a0de8ec8fb819be4425bd8bb111fcc783c'; // ← paste your token locally, never share
   const BASE_ID = 'appWYK7qd4SzxKyli';
-  const TABLE_NAME = 'Staff%20Schedules';
+  const TABLE_NAME = 'Bookings';
 
-  // All possible time slots (8am–5pm every 30 min)
   const ALL_SLOTS = [
     '8:00 AM','8:30 AM','9:00 AM','9:30 AM','10:00 AM','10:30 AM',
     '11:00 AM','11:30 AM','12:00 PM','12:30 PM','1:00 PM','1:30 PM',
     '2:00 PM','2:30 PM','3:00 PM','3:30 PM','4:00 PM','4:30 PM','5:00 PM'
   ];
 
-  // ─── STATE ────────────────────────────────────────────────────────────────
-  let currentDate = new Date();
-  let currentMonth = currentDate.getMonth();
-  let currentYear = currentDate.getFullYear();
-  let scheduleData = []; // raw from Airtable
+  const SCHEDULES = ['Schedule A', 'Schedule B'];
+
+  // ─── STATE ────────────────────────────────────────────────────────────
+  let approvedBookings = [];
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
   let selectedDate = null;
   let selectedSlot = null;
-  let selectedSchedule = null;
 
-  // ─── FETCH AIRTABLE ───────────────────────────────────────────────────────
-  async function fetchSchedules() {
+  // ─── FETCH ────────────────────────────────────────────────────────────
+  async function fetchApprovedBookings() {
     try {
-      const res = await fetch(
-        `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}`,
-        { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } }
-      );
-      if (!res.ok) throw new Error('Failed to fetch');
-      const data = await res.json();
-      scheduleData = data.records.map(r => r.fields);
+      const filter = encodeURIComponent(`{Status} = 'Approved'`);
+      let url = `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}?filterByFormula=${filter}`;
+      let allRecords = [];
+
+      // Handle pagination
+      while (url) {
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` }
+        });
+        if (!res.ok) throw new Error('Fetch failed');
+        const data = await res.json();
+        allRecords = allRecords.concat(data.records.map(r => r.fields));
+        url = data.offset
+          ? `https://api.airtable.com/v0/${BASE_ID}/${TABLE_NAME}?filterByFormula=${filter}&offset=${data.offset}`
+          : null;
+      }
+
+      approvedBookings = allRecords;
       renderCalendar();
     } catch (e) {
       document.getElementById('dates-grid').innerHTML =
@@ -645,78 +524,78 @@
     }
   }
 
-  // ─── PARSE BOOKED SLOTS ───────────────────────────────────────────────────
-  function getBookedSlots(bookedSlotsStr) {
-    if (!bookedSlotsStr) return [];
-    // Extract times like "10:00 AM", "2:30 PM" from the booked slots text
-    const matches = bookedSlotsStr.match(/\d{1,2}:\d{2}\s?[AP]M/gi);
-    return matches ? matches.map(s => s.trim()) : [];
-  }
-
-  // ─── GET AVAILABILITY FOR A DATE ─────────────────────────────────────────
-  function getAvailabilityForDate(dateStr) {
-    // dateStr format: YYYY-MM-DD
-    const records = scheduleData.filter(r => {
-      if (!r['Date']) return false;
-      return r['Date'].startsWith(dateStr);
-    });
-    return records;
-  }
-
-  // ─── DATES WITH SLOTS ─────────────────────────────────────────────────────
-  function getDatesWithSlots() {
-    const dates = new Set();
-    scheduleData.forEach(r => {
-      if (r['Date'] && r['Available From'] && r['Available Until']) {
-        dates.add(r['Date'].substring(0, 10));
+  // ─── GET APPROVED SLOTS FOR DATE ──────────────────────────────────────
+  // Returns { 'Schedule A': ['10:00 AM', ...], 'Schedule B': [...] }
+  function getApprovedSlotsForDate(dateStr) {
+    const result = { 'Schedule A': [], 'Schedule B': [] };
+    approvedBookings.forEach(b => {
+      // Use Confirmed Date & Time field - stored as ISO string
+      const raw = b['Confirmed Date & Time'];
+      if (!raw) return;
+      const bookingDate = raw.substring(0, 10);
+      if (bookingDate !== dateStr) return;
+      const schedule = b['Assigned Schedule'];
+      const time = b['Preferred Time'];
+      if (schedule && time && result[schedule] !== undefined) {
+        result[schedule].push(time);
       }
     });
-    return dates;
+    return result;
   }
 
-  // ─── RENDER CALENDAR ─────────────────────────────────────────────────────
+  // ─── IS DATE FULLY BOOKED ─────────────────────────────────────────────
+  function isDateFullyBooked(dateStr) {
+    const approved = getApprovedSlotsForDate(dateStr);
+    return SCHEDULES.every(s => approved[s].length >= ALL_SLOTS.length);
+  }
+
+  // ─── RENDER CALENDAR ──────────────────────────────────────────────────
   function renderCalendar() {
     const months = ['January','February','March','April','May','June',
                     'July','August','September','October','November','December'];
-    document.getElementById('cal-month-label').textContent =
-      `${months[currentMonth]} ${currentYear}`;
+    document.getElementById('cal-month-label').textContent = `${months[currentMonth]} ${currentYear}`;
 
-    const datesWithSlots = getDatesWithSlots();
-    const today = new Date();
-    today.setHours(0,0,0,0);
-
+    const today = new Date(); today.setHours(0,0,0,0);
     const firstDay = new Date(currentYear, currentMonth, 1).getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     const daysInPrev = new Date(currentYear, currentMonth, 0).getDate();
 
     let html = '';
 
-    // Prev month padding
     for (let i = firstDay - 1; i >= 0; i--) {
       html += `<div class="date-cell">${daysInPrev - i}</div>`;
     }
 
-    // Current month days
     for (let d = 1; d <= daysInMonth; d++) {
       const dateObj = new Date(currentYear, currentMonth, d);
       dateObj.setHours(0,0,0,0);
       const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       const isPast = dateObj < today;
       const isToday = dateObj.getTime() === today.getTime();
-      const hasSlots = datesWithSlots.has(dateStr) && !isPast;
+      const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
       const isSelected = selectedDate === dateStr;
 
       let cls = 'date-cell current-month';
-      if (isPast) cls += ' past';
-      else if (isToday) cls += ' today';
-      if (hasSlots) cls += ' has-slots';
-      if (isSelected) cls += ' selected';
+      let click = '';
 
-      const click = hasSlots ? `onclick="selectDate('${dateStr}')"` : '';
+      if (isPast) {
+        cls += ' past';
+      } else if (isWeekend) {
+        cls += ' weekend';
+      } else {
+        if (isDateFullyBooked(dateStr)) {
+          cls += ' fully-booked';
+        } else {
+          cls += ' available';
+          click = `onclick="selectDate('${dateStr}')"`;
+        }
+        if (isToday) cls += ' today';
+      }
+
+      if (isSelected) cls += ' selected';
       html += `<div class="${cls}" ${click}>${d}</div>`;
     }
 
-    // Next month padding
     const totalCells = firstDay + daysInMonth;
     const remaining = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
     for (let i = 1; i <= remaining; i++) {
@@ -726,7 +605,6 @@
     document.getElementById('dates-grid').innerHTML = html;
   }
 
-  // ─── CHANGE MONTH ─────────────────────────────────────────────────────────
   function changeMonth(dir) {
     currentMonth += dir;
     if (currentMonth > 11) { currentMonth = 0; currentYear++; }
@@ -734,122 +612,98 @@
     renderCalendar();
   }
 
-  // ─── SELECT DATE ──────────────────────────────────────────────────────────
+  // ─── SELECT DATE ──────────────────────────────────────────────────────
   function selectDate(dateStr) {
     selectedDate = dateStr;
     selectedSlot = null;
-    selectedSchedule = null;
     renderCalendar();
+    clearSelection(false);
 
-    const records = getAvailabilityForDate(dateStr);
+    const approved = getApprovedSlotsForDate(dateStr);
     const dateObj = new Date(dateStr + 'T00:00:00');
-    const formatted = dateObj.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+    const formatted = dateObj.toLocaleDateString('en-PH', {
+      weekday:'long', month:'long', day:'numeric', year:'numeric'
+    });
 
     document.getElementById('slots-date-title').textContent = formatted;
 
     let html = '';
-
-    records.forEach(record => {
-      const schedule = record['Schedule'] || 'Schedule';
-      const from = record['Available From'] || '8:00 AM';
-      const until = record['Available Until'] || '5:00 PM';
-      const booked = getBookedSlots(record['Booked Slots'] || '');
-
-      // Filter slots within available range
-      const fromIdx = ALL_SLOTS.indexOf(from);
-      const untilIdx = ALL_SLOTS.indexOf(until);
-      const availableSlots = ALL_SLOTS.filter((s, i) => i >= fromIdx && i <= untilIdx);
-
+    SCHEDULES.forEach(schedule => {
+      const takenSlots = approved[schedule] || [];
       html += `<div class="schedule-block">`;
       html += `<div class="schedule-label">${schedule}</div>`;
-      html += `<div class="slots-grid">`;
 
-      if (availableSlots.length === 0) {
-        html += `<p class="no-slots">No slots available for this schedule.</p>`;
+      const allTaken = takenSlots.length >= ALL_SLOTS.length;
+      if (allTaken) {
+        html += `<div class="slots-grid"><span class="all-taken">All slots for ${schedule} are fully booked.</span></div>`;
       } else {
-        availableSlots.forEach(slot => {
-          const isBooked = booked.some(b => b.toLowerCase() === slot.toLowerCase());
-          if (isBooked) {
-            html += `<button class="slot-btn booked" disabled>${slot}</button>`;
+        html += `<div class="slots-grid">`;
+        ALL_SLOTS.forEach(slot => {
+          const isTaken = takenSlots.includes(slot);
+          if (isTaken) {
+            html += `<button class="slot-btn taken" disabled>${slot}</button>`;
           } else {
-            html += `<button class="slot-btn" onclick="selectSlot('${slot}','${schedule}')">${slot}</button>`;
+            html += `<button class="slot-btn" onclick="selectSlot('${slot}','${schedule}',this)">${slot}</button>`;
           }
         });
+        html += `</div>`;
       }
-
-      html += `</div></div>`;
+      html += `</div>`;
     });
 
-    if (records.length === 0) {
-      html = `<p class="no-slots">No schedule data found for this date.</p>`;
-    }
-
     document.getElementById('slots-content').innerHTML = html;
-
-    const slotsSection = document.getElementById('slots-section');
-    slotsSection.classList.add('visible');
-    setTimeout(() => slotsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
-
-    // Hide form until slot selected
+    const s = document.getElementById('slots-section');
+    s.classList.add('visible');
+    setTimeout(() => s.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
     hideForm();
-    document.getElementById('selection-summary').classList.remove('visible');
   }
 
-  // ─── SELECT SLOT ──────────────────────────────────────────────────────────
-  function selectSlot(slot, schedule) {
+  // ─── SELECT SLOT ──────────────────────────────────────────────────────
+  function selectSlot(slot, schedule, btn) {
     selectedSlot = slot;
-    selectedSchedule = schedule;
+    document.querySelectorAll('.slot-btn:not(.taken)').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
 
-    // Update button styles
-    document.querySelectorAll('.slot-btn:not(.booked)').forEach(btn => btn.classList.remove('selected'));
-    event.target.classList.add('selected');
-
-    // Show summary
     const dateObj = new Date(selectedDate + 'T00:00:00');
-    const dateFormatted = dateObj.toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+    const dateFormatted = dateObj.toLocaleDateString('en-PH', {
+      month:'long', day:'numeric', year:'numeric'
+    });
+
     document.getElementById('summary-text').textContent = `${dateFormatted} at ${slot}`;
     document.getElementById('selection-summary').classList.add('visible');
-
-    // Update step indicators
     document.getElementById('step1-indicator').classList.remove('active');
     document.getElementById('step1-indicator').classList.add('done');
     document.getElementById('step2-indicator').classList.add('active');
-
-    // Show form
     showForm();
   }
 
-  // ─── CLEAR SELECTION ──────────────────────────────────────────────────────
-  function clearSelection() {
+  // ─── CLEAR / SHOW / HIDE ──────────────────────────────────────────────
+  function clearSelection(resetDate = true) {
     selectedSlot = null;
-    selectedSchedule = null;
-    document.querySelectorAll('.slot-btn').forEach(btn => btn.classList.remove('selected'));
+    document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
     document.getElementById('selection-summary').classList.remove('visible');
     hideForm();
-
-    document.getElementById('step1-indicator').classList.add('active');
-    document.getElementById('step1-indicator').classList.remove('done');
-    document.getElementById('step2-indicator').classList.remove('active');
+    if (resetDate) {
+      document.getElementById('step1-indicator').classList.add('active');
+      document.getElementById('step1-indicator').classList.remove('done');
+      document.getElementById('step2-indicator').classList.remove('active');
+    }
   }
 
-  // ─── SHOW/HIDE FORM ───────────────────────────────────────────────────────
   function showForm() {
-    const formSection = document.getElementById('step2');
-    const divider = document.getElementById('form-divider');
-    divider.style.display = 'block';
-    formSection.classList.add('visible');
-    setTimeout(() => formSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+    document.getElementById('form-divider').style.display = 'block';
+    const f = document.getElementById('step2');
+    f.classList.add('visible');
+    setTimeout(() => f.scrollIntoView({ behavior:'smooth', block:'start' }), 150);
   }
 
   function hideForm() {
-    const formSection = document.getElementById('step2');
-    const divider = document.getElementById('form-divider');
-    divider.style.display = 'none';
-    formSection.classList.remove('visible');
+    document.getElementById('form-divider').style.display = 'none';
+    document.getElementById('step2').classList.remove('visible');
   }
 
-  // ─── INIT ─────────────────────────────────────────────────────────────────
-  fetchSchedules();
+  // ─── INIT ─────────────────────────────────────────────────────────────
+  fetchApprovedBookings();
 </script>
 
 </body>
